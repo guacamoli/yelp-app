@@ -12,15 +12,19 @@ protocol YelpFiltersDelegate {
     func test(msg: String)
 }
 
-class FilterViewController: UIViewController {
-
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
+class FilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     var delegate: YelpFiltersDelegate?  = nil
-    
+
+    @IBOutlet weak var filtersTableView: UITableView!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
+    @IBOutlet weak var filtersNavBar: UINavigationItem!
+    @IBOutlet weak var searchButton: UIBarButtonItem!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.delegate?.test("sahil")
-        // Do any additional setup after loading the view.
+        //        navigationController?.setViewControllers(FilterViewController, animated: true)
+        filtersTableView.delegate = self
+        filtersTableView.dataSource = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -29,11 +33,28 @@ class FilterViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-//        test("no")
+        self.delegate?.test("sahil")
     }
     
+    @IBAction func onSearchClicked(sender: AnyObject) {
+        navigationController?.popToRootViewControllerAnimated(true)
+    }
+
     @IBAction func onCancelClick(sender: AnyObject) {
-        dismissViewControllerAnimated(true, completion: nil)
+        println(sender)
+        self.navigationController?.popToRootViewControllerAnimated(true)
+    }
+    
+    /* TableView Methods */
+
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = filtersTableView.dequeueReusableCellWithIdentifier("filterSwitchCell") as FilterSwitchCell
+        cell.optionNameLabel.text = "hello"
+        return cell
     }
     
     /*

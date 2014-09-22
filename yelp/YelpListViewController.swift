@@ -20,7 +20,6 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
 
     /* Outlets */
     @IBOutlet weak var businessTableView: UITableView!
-    @IBOutlet weak var filterButton: UIBarButtonItem!
     var searchBar: UISearchBar!
 
     required init(coder aDecoder: NSCoder) {
@@ -50,10 +49,6 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
         var color: UIColor = UIColor(red: CGFloat(196/255.0), green: CGFloat(18/255.0), blue: CGFloat(0), alpha: CGFloat(1))
         navigationController?.navigationBar.barTintColor = color
         
-        var filtersViewController = FilterViewController()
-        filtersViewController.delegate = self
-        println(filtersViewController)
-        navigationController?.pushViewController(filtersViewController, animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,9 +70,9 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var destinationViewController = segue.destinationViewController as FilterViewController
-        // Set up movie details inside the MovieDetailsViewController
+        var destinationViewController = segue.destinationViewController.viewControllers![0] as FilterViewController
         destinationViewController.delegate = self
+//        businessTableView.reloadData()
     }
     
     /* Filter Controller Methods */
