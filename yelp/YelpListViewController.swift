@@ -16,7 +16,7 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     let yelpToken = "-965FQU5EvCXlf0CUL7cN0FxX8DfLTZk"
     let yelpTokenSecret = "QEVESzxgtkiZKwOeEtrCJH66G-c"
     let defaultSearchString = "Restaurant"
-    var businesses: [NSDictionary] = []
+    var businesses: [Business] = []
 
     /* Outlets */
     @IBOutlet weak var businessTableView: UITableView!
@@ -72,7 +72,6 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var destinationViewController = segue.destinationViewController.viewControllers![0] as FilterViewController
         destinationViewController.delegate = self
-//        businessTableView.reloadData()
     }
     
     /* Filter Controller Methods */
@@ -104,53 +103,8 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = businessTableView.dequeueReusableCellWithIdentifier("businessInfo") as BusinessInfoCell
 
-        let business = businesses[indexPath.row]
-        let businessName = business["name"] as? String
-        let businessImage = business["image_url"] as? String
-        let ratingsImage = business["rating_img_url"] as? String
-        let location = business["location"] as NSDictionary
-        let categories = business["categories"] as [[String]]
-        let displayCategories = getCategoriesDisplayString(categories)
-        let displayAddressList = location["display_address"] as [String]
-        let displayAddress = getDisplayAddressString(displayAddressList)
-        let reviewCount = business["review_count"] as? Int
-
-        cell.businessName.text = String(indexPath.row + 1) + ". " + businessName!
-        cell.address.text = displayAddress
-        cell.additionalTags.text = displayCategories
-        cell.totalReviews.text = String(reviewCount!) + " Reviews"
-
-        // Fade in the business image
-        cell.businessImageView.alpha = 0.0
-        
-        // Some businesses don't have an image for some reasonevhiidfnfuihnjhjrnddnhjtfigbgbnjfdkggvgkjbbj
-        if let businessImageUrl = businessImage {
-            cell.businessImageView.setImageWithURLRequest(NSURLRequest(URL: NSURL(string:businessImageUrl)), placeholderImage: nil, success: { (request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-                cell.businessImageView.image = image
-                
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    cell.businessImageView.alpha = 1.0
-                    }, completion: { (Bool) -> Void in
-                })
-                }) { (request: NSURLRequest!, response: NSHTTPURLResponse!, error: NSError!) -> Void in
-            }
-        } else {
-            println("Business don't have an image to display")
-            // @TODO - show default image
-        }
-        
-        // Fade in ratings image
-        cell.ratingImage.alpha = 0.0
-        cell.ratingImage.setImageWithURLRequest(NSURLRequest(URL: NSURL(string:ratingsImage!)), placeholderImage: nil, success: { (request: NSURLRequest!, response: NSHTTPURLResponse!, image: UIImage!) -> Void in
-            cell.ratingImage.image = image
-            
-            UIView.animateWithDuration(0.5, animations: { () -> Void in
-                cell.ratingImage.alpha = 1.0
-                }, completion: { (Bool) -> Void in
-            })
-            }) { (request: NSURLRequest!, response: NSHTTPURLResponse!, error: NSError!) -> Void in
-        }
-    
+        cell.business = businesses[indexPath.row]
+         
         return cell
     }
     
@@ -158,9 +112,14 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
 
     func makeRequestWithParams(searchTerm: String) -> Void {
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
-        
-        client.searchWithTerm(searchTerm, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
-            self.businesses = response["businesses"] as [NSDictionary]
+        var params = ["term": searchTerm, "location": "San Francisco"]
+
+        client.searchWithTermAndOptions(searchTerm, options: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
+            var businessDictionary = (response as NSDictionary)["businesses"] as [NSDictionary]
+            self.businesses = businessDictionary.map({ (businessInfo: NSDictionary) -> Business in
+                Business(business: businessInfo)
+            })
+            
             // Reload tableview
             self.businessTableView.reloadData()
             self.businessTableView.hidden = false

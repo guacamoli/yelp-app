@@ -31,6 +31,11 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         var parameters = ["term": term, "location": "San Francisco"]
         return self.GET("search", parameters: parameters, success: success, failure: failure)
     }
+    
+    func searchWithTermAndOptions(term: String, options: [String:String], success: (AFHTTPRequestOperation!, AnyObject!) -> Void, failure: (AFHTTPRequestOperation!, NSError!) -> Void) -> AFHTTPRequestOperation! {
+        // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
+        return self.GET("search", parameters: options, success: success, failure: failure)
+    }
 }
 
 

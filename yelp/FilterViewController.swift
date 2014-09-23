@@ -25,6 +25,9 @@ class FilterViewController: UIViewController, UITableViewDataSource, UITableView
         //        navigationController?.setViewControllers(FilterViewController, animated: true)
         filtersTableView.delegate = self
         filtersTableView.dataSource = self
+        // Set navigation bar color
+        var color: UIColor = UIColor(red: CGFloat(196/255.0), green: CGFloat(18/255.0), blue: CGFloat(0), alpha: CGFloat(1))
+        navigationController?.navigationBar.barTintColor = color
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,19 +44,19 @@ class FilterViewController: UIViewController, UITableViewDataSource, UITableView
     }
 
     @IBAction func onCancelClick(sender: AnyObject) {
-        println(sender)
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        self.navigationController?.dismissViewControllerAnimated(true, completion: { () -> Void in
+        })
     }
     
     /* TableView Methods */
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell = filtersTableView.dequeueReusableCellWithIdentifier("filterSwitchCell") as FilterSwitchCell
-        cell.optionNameLabel.text = "hello"
+        cell.optionNameLabel.text = "Fishing"
         return cell
     }
     
