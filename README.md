@@ -21,11 +21,16 @@ Completed user stories:
 Didn't finish:
 
 -Radius filter should expand as in the real Yelp app
+
 -Categories should show a subset of the full list with a "See All" row to expand. Category list is here: http://www.yelp.com/developers/documentation/category_list (Links to an external site.)
+
 -Optional: infinite scroll for restaurant results
+
 -Optional: Implement map view of restaurant results
+
 -Optional: Implement the restaurant detail page.
 
+Side Note: Was crunched for time on filters page since I spent too much time polishing the main page UI in the beginning. Code got pretty hacky for FiltersViewController.
 
 Walkthrough of all user stories:
 
