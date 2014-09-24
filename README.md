@@ -28,3 +28,5 @@ Didn't finish:
 
 
 Walkthrough of all user stories:
+
+![Walkthrough](https://sahil.box.com/shared/static/44onpb70qh9855l7g1il.gif)
