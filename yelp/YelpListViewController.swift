@@ -8,7 +8,7 @@
 
 import UIKit
 
-class YelpListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, YelpFiltersDelegate {
+class YelpListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FilterViewControllerDelegate {
 
     var client: YelpClient!
     let yelpConsumerKey = "gVCmT34_OrcdPuXmNqsMcw"
@@ -16,8 +16,13 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     let yelpToken = "-965FQU5EvCXlf0CUL7cN0FxX8DfLTZk"
     let yelpTokenSecret = "QEVESzxgtkiZKwOeEtrCJH66G-c"
     let defaultSearchString = "Restaurant"
+    var lastSearchString = ""
     var businesses: [Business] = []
 
+    var offeringDeal: Bool! = false
+    var categories: [String:Bool]! = [String:Bool]()
+    var sortBy = "0"
+    
     /* Outlets */
     @IBOutlet weak var businessTableView: UITableView!
     var searchBar: UISearchBar!
@@ -72,11 +77,17 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         var destinationViewController = segue.destinationViewController.viewControllers![0] as FilterViewController
         destinationViewController.delegate = self
+        destinationViewController.offeringDeal = self.offeringDeal
+        destinationViewController.categories = self.categories
+        destinationViewController.sortBy = self.sortBy
     }
     
     /* Filter Controller Methods */
-    func test(msg: String) {
-        println("HILL HILL HILL")
+    func filtersChanged(filterViewController: FilterViewController, offeringDeal: Bool, sortBy: String, categories: [String:Bool]) {
+        self.offeringDeal = offeringDeal
+        self.sortBy = sortBy
+        self.categories = categories
+        makeRequestWithParams(lastSearchString)
     }
     
     /* SearchBar Methods */
@@ -111,11 +122,19 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     /* Helpers */
 
     func makeRequestWithParams(searchTerm: String) -> Void {
+        lastSearchString = searchTerm
+        var categoriesString = getCategoriesString() as String
         client = YelpClient(consumerKey: yelpConsumerKey, consumerSecret: yelpConsumerSecret, accessToken: yelpToken, accessSecret: yelpTokenSecret)
-        var params = ["term": searchTerm, "location": "San Francisco"]
+        var params = ["term": searchTerm, "location": "San Francisco", "sort": sortBy, "categories_filter": categoriesString]
+        
+        if offeringDeal == true {
+            params["deals_filter"] = "true"
+        }
 
+        println(params)
         client.searchWithTermAndOptions(searchTerm, options: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             var businessDictionary = (response as NSDictionary)["businesses"] as [NSDictionary]
+            println(businessDictionary)
             self.businesses = businessDictionary.map({ (businessInfo: NSDictionary) -> Business in
                 Business(business: businessInfo)
             })
@@ -130,30 +149,19 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func getDisplayAddressString(displayAddressList: [String]) -> String {
-        var count = displayAddressList.count
-        var displayAddress = ""
-        // We don't want to include the last part of the address which is always the zip code
-        for index in 0...count-2 {
-            displayAddress = displayAddress + displayAddressList[index]
-            if index < count-2 {
-                displayAddress += ", "
-            }
-        }
-        return displayAddress
-    }
-    
-    func getCategoriesDisplayString(categories: [[String]]) -> String {
+    func getCategoriesString() -> String {
         var categoriesString = ""
-        var count = categories.count
-
-        for index in 0...count-1 {
-            var category = categories[index]
-            categoriesString += category[0]
-            if index < count-1 {
-                categoriesString += ", "
+        for (category, value) in categories {
+            if value == true {
+                categoriesString += (category + ",")
             }
         }
+        let stringLength = countElements(categoriesString)
+        if stringLength > 0 {
+            let substringIndex = stringLength - 1
+            categoriesString.substringToIndex(advance(categoriesString.startIndex, substringIndex))
+        }
+
         return categoriesString
     }
 }

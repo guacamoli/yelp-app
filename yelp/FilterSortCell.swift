@@ -1,22 +1,21 @@
 //
-//  FilterSwitchCell.swift
+//  FilterSortCell.swift
 //  yelp
 //
-//  Created by Sahil Amoli on 9/21/14.
+//  Created by Sahil Amoli on 9/23/14.
 //  Copyright (c) 2014 Sahil Amoli. All rights reserved.
 //
 
 import UIKit
 
-protocol FilterSwitchCellDelegate {
-    func switchDidChange(filterSwitchCell: FilterSwitchCell, newValue: Bool)
+protocol FilterSortCellDelegate {
+    func sortValueChanged(filterSortCell: FilterSortCell, newValue: Bool)
 }
 
-class FilterSwitchCell: UITableViewCell {
-    var delegate: FilterSwitchCellDelegate? = nil
-    
-    var currentValue: Bool = false
+class FilterSortCell: UITableViewCell {
+    var delegate: FilterSortCellDelegate? = nil
     var settingType = ""
+    var currentValue: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,9 +27,9 @@ class FilterSwitchCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     func handleChange(mySwitch: UISwitch) {
         currentValue = mySwitch.on
-        self.delegate?.switchDidChange(self, newValue: currentValue)
+        self.delegate?.sortValueChanged(self, newValue: currentValue)
     }
 }

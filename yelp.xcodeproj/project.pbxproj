@@ -10,6 +10,8 @@
 		852C021B19CE69CC002C4371 /* YelpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852C021A19CE69CC002C4371 /* YelpClient.swift */; };
 		853616AD19CFD9070065C91D /* FilterSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853616AC19CFD9070065C91D /* FilterSwitchCell.swift */; };
 		853616B019D1133C0065C91D /* Business.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853616AF19D1133C0065C91D /* Business.swift */; };
+		85813BC919D2664000002B66 /* FilterCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85813BC819D2664000002B66 /* FilterCategoryCell.swift */; };
+		85813BCB19D26AB800002B66 /* FilterSortCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85813BCA19D26AB800002B66 /* FilterSortCell.swift */; };
 		85B9761619CE415200243F90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B9761519CE415200243F90 /* AppDelegate.swift */; };
 		85B9761B19CE415200243F90 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85B9761919CE415200243F90 /* Main.storyboard */; };
 		85B9761D19CE415200243F90 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85B9761C19CE415200243F90 /* Images.xcassets */; };
@@ -37,6 +39,8 @@
 		852C021D19CE6AF3002C4371 /* yelp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "yelp-Bridging-Header.h"; sourceTree = "<group>"; };
 		853616AC19CFD9070065C91D /* FilterSwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSwitchCell.swift; sourceTree = "<group>"; };
 		853616AF19D1133C0065C91D /* Business.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Business.swift; sourceTree = "<group>"; };
+		85813BC819D2664000002B66 /* FilterCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCategoryCell.swift; sourceTree = "<group>"; };
+		85813BCA19D26AB800002B66 /* FilterSortCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterSortCell.swift; sourceTree = "<group>"; };
 		85B9761019CE415200243F90 /* yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85B9761419CE415200243F90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		85B9761519CE415200243F90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +96,8 @@
 			children = (
 				85B9763B19CE482700243F90 /* BusinessInfoCell.swift */,
 				853616AC19CFD9070065C91D /* FilterSwitchCell.swift */,
+				85813BC819D2664000002B66 /* FilterCategoryCell.swift */,
+				85813BCA19D26AB800002B66 /* FilterSortCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -303,12 +309,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				85E358EF19CFAA3C00E1DABA /* FilterViewController.swift in Sources */,
+				85813BCB19D26AB800002B66 /* FilterSortCell.swift in Sources */,
 				853616B019D1133C0065C91D /* Business.swift in Sources */,
 				852C021B19CE69CC002C4371 /* YelpClient.swift in Sources */,
 				85B9763619CE41BF00243F90 /* YelpListViewController.swift in Sources */,
 				853616AD19CFD9070065C91D /* FilterSwitchCell.swift in Sources */,
 				85B9763C19CE482700243F90 /* BusinessInfoCell.swift in Sources */,
 				85B9761619CE415200243F90 /* AppDelegate.swift in Sources */,
+				85813BC919D2664000002B66 /* FilterCategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

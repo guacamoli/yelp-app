@@ -1,23 +1,23 @@
 //
-//  FilterSwitchCell.swift
+//  FilterCategoryCell.swift
 //  yelp
 //
-//  Created by Sahil Amoli on 9/21/14.
+//  Created by Sahil Amoli on 9/23/14.
 //  Copyright (c) 2014 Sahil Amoli. All rights reserved.
 //
 
 import UIKit
 
-protocol FilterSwitchCellDelegate {
-    func switchDidChange(filterSwitchCell: FilterSwitchCell, newValue: Bool)
+protocol FilterCategoryCellDelegate {
+    func categoryValueChanged(filterCategoryCell: FilterCategoryCell, newValue: Bool)
 }
 
-class FilterSwitchCell: UITableViewCell {
-    var delegate: FilterSwitchCellDelegate? = nil
+class FilterCategoryCell: UITableViewCell {
+    var delegate: FilterCategoryCellDelegate? = nil
     
     var currentValue: Bool = false
     var settingType = ""
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -28,9 +28,9 @@ class FilterSwitchCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
+
     func handleChange(mySwitch: UISwitch) {
         currentValue = mySwitch.on
-        self.delegate?.switchDidChange(self, newValue: currentValue)
+        self.delegate?.categoryValueChanged(self, newValue: currentValue)
     }
 }
