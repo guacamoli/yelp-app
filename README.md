@@ -17,12 +17,10 @@ Completed user stories:
 - [x] The filters table should be organized into sections as in the mock.
 - [x] You can use the default UISwitch for on/off states. Optional: implement a custom switch
 - [x] Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
+- [x] Radius filter should expand as in the real Yelp app
+- [x] Categories should show a subset of the full list with a "See All" row to expand. Category list is here: http://www.yelp.com/developers/documentation/category_list (Links to an external site.)
 
 Didn't finish:
-
--Radius filter should expand as in the real Yelp app
-
--Categories should show a subset of the full list with a "See All" row to expand. Category list is here: http://www.yelp.com/developers/documentation/category_list (Links to an external site.)
 
 -Optional: infinite scroll for restaurant results
 
@@ -30,8 +28,6 @@ Didn't finish:
 
 -Optional: Implement the restaurant detail page.
 
-Side Note: Was crunched for time on filters page since I spent too much time polishing the main page UI in the beginning. Code got pretty hacky for FiltersViewController.
-
 Walkthrough of all user stories:
 
-![Walkthrough](https://sahil.box.com/shared/static/44onpb70qh9855l7g1il.gif)
+![Walkthrough](https://sahil.box.com/shared/static/oxyadp38rx91pqfq2zls.gif)
