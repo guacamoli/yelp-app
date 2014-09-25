@@ -15,7 +15,7 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     let yelpConsumerSecret = "mpgXYtzSzo_xquTBhh4WLt4YcjE"
     let yelpToken = "-965FQU5EvCXlf0CUL7cN0FxX8DfLTZk"
     let yelpTokenSecret = "QEVESzxgtkiZKwOeEtrCJH66G-c"
-    let defaultSearchString = "Restaurant"
+    let defaultSearchString = ""
     var lastSearchString = ""
     var businesses: [Business] = []
 
