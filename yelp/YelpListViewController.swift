@@ -22,6 +22,7 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
     var offeringDeal: Bool! = false
     var categories: [String:Bool]! = [String:Bool]()
     var sortBy = "0"
+    var radiusFilter = ""
     
     /* Outlets */
     @IBOutlet weak var businessTableView: UITableView!
@@ -80,11 +81,13 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
         destinationViewController.offeringDeal = self.offeringDeal
         destinationViewController.categories = self.categories
         destinationViewController.sortBy = self.sortBy
+        destinationViewController.radiusFilter = self.radiusFilter
     }
     
     /* Filter Controller Methods */
-    func filtersChanged(filterViewController: FilterViewController, offeringDeal: Bool, sortBy: String, categories: [String:Bool]) {
+    func filtersChanged(filterViewController: FilterViewController, offeringDeal: Bool, radiusFilter: String, sortBy: String, categories: [String:Bool]) {
         self.offeringDeal = offeringDeal
+        self.radiusFilter = radiusFilter
         self.sortBy = sortBy
         self.categories = categories
         makeRequestWithParams(lastSearchString)
@@ -130,11 +133,13 @@ class YelpListViewController: UIViewController, UITableViewDataSource, UITableVi
         if offeringDeal == true {
             params["deals_filter"] = "true"
         }
+        
+        if radiusFilter != "" {
+            params["radius_filter"] = radiusFilter
+        }
 
-        println(params)
         client.searchWithTermAndOptions(searchTerm, options: params, success: { (operation: AFHTTPRequestOperation!, response: AnyObject!) -> Void in
             var businessDictionary = (response as NSDictionary)["businesses"] as [NSDictionary]
-            println(businessDictionary)
             self.businesses = businessDictionary.map({ (businessInfo: NSDictionary) -> Business in
                 Business(business: businessInfo)
             })
